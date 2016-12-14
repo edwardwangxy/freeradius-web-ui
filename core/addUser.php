@@ -17,21 +17,27 @@ if ( empty( $_POST['fullname'] ) || empty( $_POST['username'] ) || empty( $_POST
 	$username     = strtolower($_POST['username']);
 	$email        = strtolower($_POST['email']);
 	$passwordType = $_POST['passwordType'];
-	require_once 'includes/class.RandomPassword.php';
+    $Password = $_POST['password'];
+	//require_once 'includes/class.RandomPassword.php';
 
 	$op            = ':==';
-	$Password      = new RandomPassword();
-	$plainPassword = $Password->getPassword();
+	//$Password      = new RandomPassword();
+	//$plainPassword = $Password->getPassword();
 
 	if ( $passwordType == 'MD5' ) {
-		$password  = md5( $plainPassword );
+		$password  = md5( $Password );
 		$attribute = 'MD5-Password';
 	}
 
 	if ( $passwordType == 'SHA1' ) {
-		$password  = sha1( $plainPassword );
+		$password  = sha1( $Password );
 		$attribute = 'SHA-Password';
 	}
+
+    if ( $passwordType == 'Cleartext-Password' ) {
+        $password  = $Password;
+        $attribute = 'Cleartext-Password';
+    }
 }
 
 if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
