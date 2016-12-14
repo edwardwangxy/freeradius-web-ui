@@ -9,7 +9,7 @@ if ( $_SERVER['REQUEST_METHOD'] != 'POST' ) {
 	exit;
 }
 
-if ( empty( $_POST['fullname'] ) || empty( $_POST['username'] ) || empty( $_POST['passwordType'] ) || empty( $_POST['email'] ) ) {
+if ( empty( $_POST['fullname'] ) || empty( $_POST['username'] ) || empty( $_POST['passwordType'] ) || empty( $_POST['email'] )|| empty( $_POST['password'] ) ) {
 	echo 'Empty';
 	exit;
 } else {
@@ -17,25 +17,25 @@ if ( empty( $_POST['fullname'] ) || empty( $_POST['username'] ) || empty( $_POST
 	$username     = strtolower($_POST['username']);
 	$email        = strtolower($_POST['email']);
 	$passwordType = $_POST['passwordType'];
-    $Password = $_POST['password'];
+    $password_input = $_POST['password'];
 	//require_once 'includes/class.RandomPassword.php';
 
 	$op            = ':==';
 	//$Password      = new RandomPassword();
-	//$plainPassword = $Password->getPassword();
+	$plainPassword = $password_input; //->getPassword();
 
 	if ( $passwordType == 'MD5' ) {
-		$password  = md5( $Password );
+		$password  = md5( $plainPassword );
 		$attribute = 'MD5-Password';
 	}
 
 	if ( $passwordType == 'SHA1' ) {
-		$password  = sha1( $Password );
+		$password  = sha1( $plainPassword );
 		$attribute = 'SHA-Password';
 	}
 
     if ( $passwordType == 'Cleartext-Password' ) {
-        $password  = $Password;
+        $password  = $plainPassword;
         $attribute = 'Cleartext-Password';
     }
 }
